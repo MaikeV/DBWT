@@ -1,0 +1,18 @@
+img {
+    width: 200px;
+    height: 200px;
+}
+
+.soldOut {
+    filter: opacity(25%);
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+    filter: invert(100%);
+}
+
+.details {
+    color: #00b5ad !important;
+}
