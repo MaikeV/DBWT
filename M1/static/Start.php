@@ -33,7 +33,7 @@
             </div>
             <div class="row mt-3 text-warning">
                 <div class="col-2 text-left infoText">
-                    <p>Registrieren Sie sich <a href="Register.html">hier</a>, um ueber die Veroefentlichungen des Dienstes per Mail informiert zu werden.</p>
+                    <p>Registrieren Sie sich <a href="Register.html">hier</a>, um ueber die Veroeffentlichungen des Dienstes per Mail informiert zu werden.</p>
                 </div>
                 <div class="col-10">
                     <img src="../img/ramen_620x350_51492774796.jpg" id="imgStart" class="img" alt="Responsive image">
