@@ -210,7 +210,7 @@ CREATE TABLE hatMB
 
 CREATE TABLE Zutaten
 (
-    ID INT(5) UNSIGNED ZEROFILL UNIQUE NOT NULL PRIMARY KEY ,
+    ID INT(5) ZEROFILL UNIQUE NOT NULL PRIMARY KEY,
     Name char(100) NOT NULL,
     Bio BOOLEAN NOT NULL,
     Vegetarisch BOOLEAN NOT NULL,
@@ -383,3 +383,4 @@ INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019'
 INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '5.50', '3.50', '4.50', 6);
 INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '4.50', '2.50', '3.50', 7);
 INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '5.50', '3.50', '4.50', 8);
+

@@ -1,0 +1,7 @@
+{
+    "name": "mv6889s/m2",
+    "require": {
+        "vlucas/phpdotenv": "^3.6",
+        "ext-mysqli": "*"
+    }
+}
