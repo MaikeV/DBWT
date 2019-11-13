@@ -31,7 +31,7 @@ CREATE TABLE Benutzer
     Vorname       CHAR(100)  NOT NULL,
     Nachname      CHAR(50)   NOT NULL,
     Geburtsdatum  DATE,
-    `Alter`       INT AS(TIMESTAMPDIFF(YEAR, Geburtsdatum, CURDATE())),
+    `Alter`       INT AS(TIMESTAMPDIFF(YEAR, Geburtsdatum, CURDATE())) VIRTUAL,
     Hash          CHAR(60)   NOT NULL,
     LetzterLogin  DATETIME   DEFAULT NULL
 );
@@ -210,7 +210,7 @@ CREATE TABLE hatMB
 
 CREATE TABLE Zutaten
 (
-    ID NUMERIC(5, 0) UNIQUE NOT NULL PRIMARY KEY ,
+    ID INT(5) UNSIGNED ZEROFILL UNIQUE NOT NULL PRIMARY KEY ,
     Name char(100) NOT NULL,
     Bio BOOLEAN NOT NULL,
     Vegetarisch BOOLEAN NOT NULL,
@@ -222,7 +222,7 @@ CREATE TABLE Zutaten
 CREATE TABLE enthaeltMZ
 (
     IDMahlzeiten INT,
-    IDZutaten NUMERIC(5, 0),
+    IDZutaten INT(5) UNSIGNED ZEROFILL,
     CONSTRAINT IDMahlzeitEnthaeltZutaten
         FOREIGN KEY (IDMahlzeiten)
         REFERENCES Mahlzeiten(ID)
@@ -326,11 +326,11 @@ INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00000
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00001, 'Gehacktes (gemischt)', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00002, 'Gehacktes (Schwein)', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00003, 'Sahne', 1, 1, 0, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00004, 'Paniermehl', 1, 1, 1, 0);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00004, 'Paniermehl', 0, 1, 1, 0);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00005, 'Preisselbeeren', 1, 1, 1, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00006, 'Kartoffeln', 1, 1, 1, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00007, 'Gurken', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00008, 'Nudeln (asiatisch)', 1, 1, 1, 0);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00008, 'Nudeln (asiatisch)', 0, 1, 1, 0);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00009, 'Schweinebauch', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00010, 'Ei', 1, 1, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00011, 'Shiitake', 1, 1, 1, 1);
@@ -346,24 +346,24 @@ INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00020
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00021, 'Thunfisch', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00022, 'Garnelen', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00023, 'Avocado', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00024, 'Reis', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00025, 'Mehl', 1, 1, 1, 0);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00026, 'Wasser', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00027, 'Hefe', 1, 1, 1, 0);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00028, 'Mozzarella', 1, 1, 0, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00029, 'Parmesan', 1, 1, 0, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00024, 'Reis', 0, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00025, 'Mehl', 0, 1, 1, 0);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00026, 'Wasser', 0, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00027, 'Hefe', 0, 1, 1, 0);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00028, 'Mozzarella', 0, 1, 0, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00029, 'Parmesan', 0, 1, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00030, 'Basilikum', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00031, 'Olivenoel', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00032, 'Salz', 1, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00031, 'Olivenoel', 0, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00032, 'Salz', 0, 1, 1, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00033, 'Pak Choi', 1, 1, 1, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00034, 'Chilis', 1, 1, 1, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00035, 'Knoblauch', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00036, 'Oel', 1, 1, 1, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00037, 'Gewuerze', 1, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00036, 'Oel', 0, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00037, 'Gewuerze', 0, 1, 1, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00038, 'Lachsforelle', 1, 0, 0, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00039, 'Bruehe', 1, 0, 0, 1);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00040, 'Buns', 1, 1, 0, 0);
-INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00041, 'Essig', 1, 1, 1, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00039, 'Bruehe', 0, 0, 0, 1);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00040, 'Buns', 0, 1, 0, 0);
+INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00041, 'Essig', 0, 1, 1, 1);
 
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (1, 00001), (1, 00003), (1, 00004), (1, 00005), (1, 00006), (1, 00007), (1, 00032);
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (2, 00008), (2, 00009), (2, 00010), (2, 00011), (2, 00012), (2, 00039), (2, 00032);
@@ -373,3 +373,13 @@ INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (5, 00020), (5, 00021), (
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (6, 00025), (6, 00026), (6, 00027), (6, 00028), (6, 00029), (6, 00030), (6, 00031);
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (7, 00025), (7, 00026), (7, 00032), (7, 00002), (7, 00011), (7, 00033), (7, 00034), (7, 00035), (7, 00036), (7, 00037);
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (8, 00038), (8, 00006), (8, 00035), (8, 00019), (8, 00032);
+
+
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '5.50', '3.50', '4.50', 1);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '4.50', '2.60', '3.60', 2);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '8.50', '6.00', '7.00', 3);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '6.50', '4.20', '5.20', 4);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '8.50', '6.00', '7.00', 5);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '5.50', '3.50', '4.50', 6);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '4.50', '2.50', '3.50', 7);
+INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '5.50', '3.50', '4.50', 8);
