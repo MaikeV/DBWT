@@ -121,7 +121,7 @@ CREATE TABLE Bilder
     ID INT NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `Alt-Text` CHAR(50) NOT NULL,
     Titel CHAR(100) NULL,
-    Binaerdaten MEDIUMBLOB NULL
+    Binaerdaten BLOB NULL
 );
 
 CREATE TABLE Kategorien
@@ -321,7 +321,6 @@ INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Pizza', 100, '
 INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Dumplings', 300, 'Frisch gesteamte chinesische Dumplings, gefuellt mit Rindergehacktem, Shiitake und Pak Choi. Dazu Chilioel und Knobalauchwasser.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'chinesisch'));
 INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Lachsforelle aus dem Ofen', 50, 'Taeglich frisch gefangene Lachsforelle. Im Ofen gegart, mit Knoblauch und roten Zwiebeln. Dazu Kartoffeln mit Butter.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'deutsch'));
 
-
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00000, 'Gehacktes (Rind)', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00001, 'Gehacktes (gemischt)', 1, 0, 0, 1);
 INSERT INTO Zutaten(ID, Name, Bio, Vegetarisch, Vegan, Glutenfrei) VALUES (00002, 'Gehacktes (Schwein)', 1, 0, 0, 1);
@@ -373,7 +372,6 @@ INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (5, 00020), (5, 00021), (
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (6, 00025), (6, 00026), (6, 00027), (6, 00028), (6, 00029), (6, 00030), (6, 00031);
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (7, 00025), (7, 00026), (7, 00032), (7, 00002), (7, 00011), (7, 00033), (7, 00034), (7, 00035), (7, 00036), (7, 00037);
 INSERT INTO enthaeltMZ(IDMahlzeiten, IDZutaten) VALUES (8, 00038), (8, 00006), (8, 00035), (8, 00019), (8, 00032);
-
 
 INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '5.50', '3.50', '4.50', 1);
 INSERT INTO Preise(Jahr, Gastpreis, Studentpreis, `MA-Preis`, ID) VALUES ('2019', '4.50', '2.60', '3.60', 2);

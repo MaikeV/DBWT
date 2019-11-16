@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php include 'snippets/connection.php'; ?>
 <head>
     <meta charset="UTF-8">
     <title>e-Mensa</title>
@@ -11,7 +12,15 @@
     <?php include 'snippets/header.php' ?>
     <main>
         <div class="container-fluid mw-100">
-            <img src="../img/sushi-2853382_1920-Banner-Crop.jpg" id="banner" class="img w-100" alt="Responsive image">
+            <?php
+                $query = 'SELECT Binaerdaten, `Alt-Text` FROM Bilder WHERE Titel LIKE \'Sushi%Start\'';
+
+                if($result = mysqli_query($remoteConnection, $query)) {
+                    $row = mysqli_fetch_assoc($result);
+
+                    echo '<img src="data:image/jpeg;base64,'.$row['Binaerdaten'].'" id="banner" class="img w-100" alt="'.$row['Alt-Text'].'">';
+                }
+            ?>
         </div>
         <div class="container-fluid p-3">
             <div class="row mt-3 text-warning">
@@ -37,11 +46,22 @@
                     <p>Registrieren Sie sich <a href="Register.html">hier</a>, um ueber die Veroeffentlichungen des Dienstes per Mail informiert zu werden.</p>
                 </div>
                 <div class="col-10">
-                    <img src="../img/ramen_620x350_51492774796.jpg" id="imgStart" class="img" alt="Responsive image">
+                    <?php
+                        $query = 'SELECT Binaerdaten, `Alt-Text` FROM Bilder WHERE Titel LIKE \'Ramen%Start\'';
+
+                        if($result = mysqli_query($remoteConnection, $query)) {
+                            $row = mysqli_fetch_assoc($result);
+
+                            echo '<img src="data:image/jpeg;base64,'.$row['Binaerdaten'].'" id="imgStart" class="img w-100" alt="'.$row['Alt-Text'].'">';
+                        }
+                    ?>
                 </div>
             </div>
         </div>
     </main>
-    <?php include 'snippets/footer.php' ?>
+    <?php
+        include 'snippets/footer.php';
+        mysqli_close($remoteConnection);
+    ?>
 </body>
 </html>

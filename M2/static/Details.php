@@ -68,7 +68,21 @@
                     </fieldset>
                 </div>
                 <div class="col-6">
-                    <img src="../img/Köttbullar%20(Schwedische%20Hackfleischbällchen).jpg" class="img w-100" alt="Image">
+                    <?php
+                        $queryPic = 'SELECT `Alt-Text`, Binaerdaten, Titel FROM Mahlzeiten m 
+                                                                LEFT JOIN hatMB hM on m.ID = hM.IDMahlzeiten 
+                                                                LEFT JOIN Bilder B on hM.IDBilder = B.ID 
+                                                                WHERE m.ID = '.$row['ID'].' 
+                                                                HAVING B.Titel LIKE \'%Details\'';
+
+                        if($resultPic = mysqli_query($remoteConnection, $queryPic)) {
+                            $rowPic = mysqli_fetch_assoc($resultPic);
+
+                            echo '<img src="data:image/jpeg;base64,'.$rowPic['Binaerdaten'].'" class="img rounded" alt="'.$rowPic['Alt-Text'].'">';
+                        }
+                    ?>
+
+
                 </div>
                 <div class="col-3 p-5">
                     <div class="row">

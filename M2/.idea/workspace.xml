@@ -46,7 +46,7 @@
         <item name="MariaDB - db3191233@149.201.88.110" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="db3191233: schema" type="ebfa3cd1:MariaImplModel$Schema" />
-        <item name="enthaeltBM: table" type="dbc44a63:MariaImplModel$Table" />
+        <item name="Bilder: table" type="dbc44a63:MariaImplModel$Table" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -54,6 +54,27 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="db3191233: schema" type="ebfa3cd1:MariaImplModel$Schema" />
         <item name="enthaeltMZ: table" type="dbc44a63:MariaImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MariaDB - db3191233@149.201.88.110" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="db3191233: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+        <item name="hatMB: table" type="dbc44a63:MariaImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MariaDB - db3191233@149.201.88.110" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="db3191233: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+        <item name="Kategorien: table" type="dbc44a63:MariaImplModel$Table" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="MariaDB - db3191233@149.201.88.110" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="db3191233: schema" type="ebfa3cd1:MariaImplModel$Schema" />
+        <item name="Mahlzeiten: table" type="dbc44a63:MariaImplModel$Table" />
       </path>
       <path>
         <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
@@ -138,7 +159,7 @@
       <updated>1573500385644</updated>
       <workItem from="1573500389624" duration="785000" />
       <workItem from="1573543181668" duration="16478000" />
-      <workItem from="1573573563783" duration="19494000" />
+      <workItem from="1573573563783" duration="50573000" />
     </task>
     <servers />
   </component>

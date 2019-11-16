@@ -48,35 +48,24 @@
                             </thead>
                             <tbody class="align-content-center text-center align-self-center">
                                 <?php
+                                    function printFlags(bool $flag) {
+                                        if ($flag == 1) {
+                                            echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" alt="Icon"></td>';
+                                        } else {
+                                            echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" alt="Icon"></td>';
+                                        }
+                                    }
+
                                     $query = "SELECT * FROM Zutaten ORDER BY Bio DESC , Name";
 
                                     if($result = mysqli_query($remoteConnection, $query)) {
                                         while($row = mysqli_fetch_assoc($result)) {
                                             echo '<tr><td>'.$row['ID'].'</td><td><button type="submit" name="q" class="btn btn-link text-warning" value="'.$row['Name'].'" data-toggle="tooltip" data-placement="right" title="Suchen Sie nach '.$row['Name'].' im Web">'.$row['Name'].'</button></td>';
 
-                                            if ($row['Bio'] == 1) {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" alt="Icon"></td>';
-                                            } else {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" alt="Icon"></td>';
-                                            }
-
-                                            if ($row['Vegetarisch'] == 1) {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" alt="Icon"></td>';
-                                            } else {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" alt="Icon"></td>';
-                                            }
-
-                                            if ($row['Vegan'] == 1) {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" alt="Icon"></td>';
-                                            } else {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" alt="Icon"></td>';
-                                            }
-
-                                            if ($row['Glutenfrei'] == 1) {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" alt="Icon"></td>';
-                                            } else {
-                                                echo '<td><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" alt="Icon"></td>';
-                                            }
+                                            printFlags($row['Bio']);
+                                            printFlags($row['Vegetarisch']);
+                                            printFlags($row['Vegan']);
+                                            printFlags($row['Glutenfrei']);
 
                                             echo '</tr>';
                                         }
