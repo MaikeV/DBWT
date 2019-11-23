@@ -129,17 +129,7 @@ CREATE TABLE Kategorien
     ID INT NOT NULL UNIQUE PRIMARY KEY AUTO_INCREMENT,
     Bezeichnung char(100) NOT NULL,
     hatKategorien INT,
-    hatBilder INT,
-    CONSTRAINT hatKategorien
-        FOREIGN KEY(hatKategorien)
-        REFERENCES Kategorien(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    CONSTRAINT hatBilder
-        FOREIGN KEY(hatBilder)
-        REFERENCES Bilder(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+    hatBilder INT
 );
 
 CREATE TABLE Mahlzeiten
@@ -149,12 +139,7 @@ CREATE TABLE Mahlzeiten
 	Vorrat int default 0 NOT NULL,
 	Beschreibung char(255) NOT NULL,
 	Verfuegbar BOOLEAN AS(Vorrat > 0) VIRTUAL,
-	istIn INT NOT NULL,
-	CONSTRAINT inKategorie
-        FOREIGN KEY(istIn)
-        REFERENCES Kategorien(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+	istIn INT NOT NULL
 );
 
 # N - M zwischen Bestellungen und Mahlzeiten
@@ -183,11 +168,6 @@ CREATE TABLE Preise
     Studentpreis DOUBLE CHECK(Studentpreis < `MA-Preis` AND Studentpreis > 0),
     `MA-Preis` DOUBLE CHECK (`MA-Preis` > 0),
     ID INT NOT NULL,
-    CONSTRAINT IDMahlzeitPreise
-        FOREIGN KEY(ID)
-        REFERENCES Mahlzeiten(ID)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE,
     PRIMARY KEY(Jahr, ID)
 );
 
@@ -292,6 +272,10 @@ CREATE TABLE befreundetMit
         ON UPDATE CASCADE
 );
 
+ALTER TABLE Mahlzeiten ADD CONSTRAINT inKategorie FOREIGN KEY (istIn) REFERENCES Kategorien(ID) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE Preise ADD CONSTRAINT IDMahlzeitPreise FOREIGN KEY(ID) REFERENCES Mahlzeiten(ID) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE Kategorien ADD CONSTRAINT hatBilder FOREIGN KEY(hatBilder) REFERENCES Bilder(ID) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE Kategorien ADD CONSTRAINT hatKategorien FOREIGN KEY(hatKategorien) REFERENCES Kategorien(ID) ON DELETE SET NULL ON UPDATE CASCADE;
 
 INSERT INTO Benutzer(`E-Mail`, Nutzername, Anlegedatum, Aktiv, Vorname, Nachname, Geburtsdatum, Hash, LetzterLogin) VALUES ('mv6889s@fh-aachen.de', 'mv6889s', CURRENT_DATE, 1, 'Maike', 'Voss', '1995-08-03', '123456', NOW());
 INSERT INTO FH_Angehoerige(Nummer) SELECT Nummer FROM Benutzer WHERE Nutzername = 'mv6889s';
@@ -312,7 +296,7 @@ INSERT INTO Benutzer(`E-Mail`, Nutzername, Anlegedatum, Aktiv, Vorname, Nachname
 
 INSERT INTO Kategorien(Bezeichnung) VALUES ('schwedisch'), ('japanisch'), ('chinesisch'), ('italienisch'), ('amerikanisch'), ('deutsch');
 
-INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Koettbullar', 100, 'Leckere schwedische Fleischbaellchen mit Kartoffelpueree und Preisselbeerne. Dazu Gurkensalat und Sahnesosse.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'schwedisch'));
+INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Koettbullar', 100, 'Leckere schwedische Fleischbaellchen mit Kartoffelpueree und Preisselbeeren. Dazu Gurkensalat und Sahnesosse.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'schwedisch'));
 INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Ramen', 1000, 'Leckere japanische Nudelsuppe mit Schweinebauch, Ei, Shiitake und Fruehlingszwiebeln.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'japanisch'));
 INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Rumpsteak', 100, 'Frisch gegrilltes Rumpsteak, englisch. Dazu Folienkartoffel, frisch aus dem Ofen mit Kraeuterquark.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'amerikanisch'));
 INSERT INTO Mahlzeiten(Name, Vorrat, Beschreibung, istIn) VALUES('Burger', 0, 'Saftiger Rindfleischburger mit Bacon, Kaese, Tomate und roten Zwiebeln.', (SELECT ID FROM Kategorien WHERE Bezeichnung = 'amerikanisch'));
@@ -408,3 +392,6 @@ INSERT INTO hatMB(IDMahlzeiten, IDBilder) VALUES (5, 6), (5, 7), (5, 8);
 INSERT INTO hatMB(IDMahlzeiten, IDBilder) VALUES (6, 9), (6, 10);
 INSERT INTO hatMB(IDMahlzeiten, IDBilder) VALUES (7, 11), (7, 12);
 INSERT INTO hatMB(IDMahlzeiten, IDBilder) VALUES (8, 13), (8, 15);
+
+
+SELECT * FROM Mahlzeiten m LEFT JOIN hatMB hM on m.ID = hM.IDMahlzeiten LEFT JOIN Bilder B on hM.IDBilder = B.ID HAVING B.Titel LIKE '%Preview' AND m.Verfuegbar = 1 AND m.istIn LIKE '%' LIMIT 8;
