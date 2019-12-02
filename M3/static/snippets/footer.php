@@ -9,7 +9,7 @@
                 <a href="Login.html" class="text-white">Login</a>
             </div>
             <div class="col-2 text-center border-right border-white">
-                <a href="Registrieren.html" class="text-white">Registrieren</a>
+                <a href="Registration.php" class="text-white">Registrieren</a>
             </div>
             <div class="col-2 text-center border-right border-white">
                 <a href="Zutatenliste.php" class="text-white">Zutatenliste</a>
