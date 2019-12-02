@@ -1,0 +1,8 @@
+Dossier M1:
+- Die html/php Dateien befinden sich im Ordner /static
+
+- mit statischem HTML muesste man fuer jede Mahlzeit eine eigene Detailseite
+  bauen
+- waere mit sehr viel Arbeit verbunden
+- Aenderungen waeren sehr aufwaendig
+- Besser: dynamisches Laden der Daten ueber z.B php + Datenbank 
