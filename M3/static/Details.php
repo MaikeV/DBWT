@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+
 <!DOCTYPE html>
     <html lang="en">
         <?php
@@ -33,7 +37,7 @@
                 function redirToMahlzeiten($remoteConnection) {
                     echo 'Invalid ID: Redirecting to Mahlzeiten';
                     sleep(3);
-                    header("Location: http://127.0.0.1/M3/static/Mahlzeiten.php");
+                    header("Location: http://127.0.0.1/DBWT/M3/static/Mahlzeiten.php");
                     mysqli_close($remoteConnection);
                     exit();
                 }
@@ -53,6 +57,7 @@
                         <div class="col-3">
                             <?php
                             include 'snippets/login.php';
+                            include 'snippets/auth.php';
                             ?>
                         </div>
                         <div class="col-6">
