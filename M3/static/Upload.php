@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="Zutatenliste.css">
         <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="header.css">
+        <link rel="stylesheet" href="snippets/header.css">
         <title>e-Mensa</title>
     </head>
     <body class="bg-dark">

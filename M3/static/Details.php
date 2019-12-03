@@ -12,7 +12,7 @@
             <title>e-Mensa</title>
             <link rel="stylesheet" href="css/bootstrap.css">
             <link rel="stylesheet" href="Details.css">
-            <link rel="stylesheet" href="header.css">
+            <link rel="stylesheet" href="snippets/header.css">
         </head>
         <body class="bg-dark">
             <?php
@@ -68,10 +68,16 @@
                         <div class="col-3 p-5">
                             <div class="row">
                                 <div class="col-12 text-center text-warning">
-                                    <p><strong>Gast</strong>-Preis</p>
+                                    <p><strong><?php if (isset($_SESSION['role'])) { echo $_SESSION['role']; } else { echo "Gast"; }?></strong>-Preis</p>
                                     <h4>
                                         <?php
-                                        echo round($row['Gastpreis'], 2).' EUR';
+                                            if (isset($_SESSION['role']) && $_SESSION['role'] == 'Student') {
+                                                echo round($row['Studentpreis'], 2).' EUR';
+                                            } else if(isset($_SESSION['role']) && $_SESSION['role'] == 'Mitarbeiter') {
+                                                echo round($row['MA-Preis'], 2).' EUR';
+                                            } else {
+                                                echo round($row['Gastpreis'], 2).' EUR';
+                                            }
                                         ?>
                                     </h4>
                                 </div>

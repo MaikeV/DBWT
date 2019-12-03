@@ -6,21 +6,13 @@
     <title>e-Mensa</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="Start.css">
-    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="snippets/header.css">
 </head>
 <body class="bg-dark">
     <?php include 'snippets/header.php' ?>
     <main>
         <div class="container-fluid mw-100">
-            <?php
-                $query = 'SELECT Binaerdaten, `Alt-Text` FROM Bilder WHERE Titel LIKE \'Sushi%Start\'';
-
-                if($result = mysqli_query($remoteConnection, $query)) {
-                    $row = mysqli_fetch_assoc($result);
-
-                    echo '<img src="data:image/jpeg;base64,'.$row['Binaerdaten'].'" id="banner" class="img w-100" alt="'.$row['Alt-Text'].'">';
-                }
-            ?>
+            <img src="../img/sushi-2853382_1920-Banner-Crop.jpg" id="banner" class="img w-100" alt="'.$row['Alt-Text'].'">
         </div>
         <div class="container-fluid p-3">
             <div class="row mt-3 text-warning">
@@ -36,25 +28,17 @@
                     <h4><?php echo date('H:i:s')?></h4>
                 </div>
                 <div class="col-2 align-content-end justify-content-end align-items-end">
-                    <button class="btnSign btn btn-primary mb-3"><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/user-plus.svg" alt="Image" class="img-fluid icon "> Registrieren</button>
+                    <a href="Registration.php" class="btnSign btn btn-primary justify-content-center text-justify text-center mb-3"><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/user-plus.svg" alt="Image" class="img-fluid icon "> Registrieren</a>
                     <br>
-                    <button class="btnSign btn btn-primary"><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/sign-in-alt.svg" alt="Image" class="img-fluid icon"> Anmelden</button>
+                    <a href="Login.php" class="btnSign btn btn-primary justify-content-center text-justify text-center"><img src="../img/fontawesome-free-5.11.2-desktop/svgs/solid/sign-in-alt.svg" alt="Image" class="img-fluid icon"> Anmelden</a>
                 </div>
             </div>
             <div class="row mt-3 text-warning">
                 <div class="col-2 text-left infoText">
-                    <p>Registrieren Sie sich <a href="Register.html">hier</a>, um ueber die Veroeffentlichungen des Dienstes per Mail informiert zu werden.</p>
+                    <p>Registrieren Sie sich <a href="Registration.php">hier</a>, um ueber die Veroeffentlichungen des Dienstes per Mail informiert zu werden.</p>
                 </div>
                 <div class="col-10">
-                    <?php
-                        $query = 'SELECT Binaerdaten, `Alt-Text` FROM Bilder WHERE Titel LIKE \'Ramen%Start\'';
-
-                        if($result = mysqli_query($remoteConnection, $query)) {
-                            $row = mysqli_fetch_assoc($result);
-
-                            echo '<img src="data:image/jpeg;base64,'.$row['Binaerdaten'].'" id="imgStart" class="img w-100" alt="'.$row['Alt-Text'].'">';
-                        }
-                    ?>
+                    <img src="../img/ramen_620x350_51492774796.jpg" id="imgStart" class="img w-100" alt="'.$row['Alt-Text'].'">
                 </div>
             </div>
         </div>

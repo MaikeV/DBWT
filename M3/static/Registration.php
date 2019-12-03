@@ -8,7 +8,7 @@
         <title>e-Mensa</title>
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="Register.nocache.css">
-        <link rel="stylesheet" href="header.css">
+        <link rel="stylesheet" href="snippets/header.css">
     </head>
     <body class="bg-dark">
         <main>

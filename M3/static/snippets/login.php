@@ -19,7 +19,7 @@
                         <div class="form-group mt-3">
                             <input type="hidden" class="form-control" name="function" value="login">
                         </div>
-                        <button type="submit" class="btn btn-link">Anmelden</button>';
+                        <button type="submit" class="btn btn-primary">Anmelden</button>';
             } else {
                 echo '<div class="form-group">
                             <input type="text" class="form-control" placeholder="Benutzer" name="username" required>
@@ -30,7 +30,7 @@
                         <div class="form-group mt-3">
                             <input type="hidden" class="form-control" name="function" value="login">
                         </div>
-                        <button type="submit" class="btn btn-link">Anmelden</button>';
+                        <button type="submit" class="btn btn-primary">Anmelden</button>';
             }
         ?>
     </form>
