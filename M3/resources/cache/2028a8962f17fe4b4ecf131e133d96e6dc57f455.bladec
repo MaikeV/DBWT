@@ -1,0 +1,63 @@
+<main>
+ <div class="row">
+ <div class="col-1"></div>
+ <div class="col-5 text-warning">
+ <h1>Zutatenliste (<?php echo static::e($ingredientsCount["count"]); ?>)</h1>
+ <br>
+ </div>
+ </div>
+ <div class="row">
+ <div class="col-1"></div>
+ <div class="col-10">
+ <form action="http://www.google.de/search" method="get" target="_blank">
+ <table class="text-warning table table-dark">
+ <thead class="text-center">
+ <tr>
+ <th scope="col">Nr.</th>
+ <th scope="col">Name</th>
+ <th scope="col">Bio</th>
+ <th scope="col">Vegetarisch</th>
+ <th scope="col">Vegan</th>
+ <th scope="col">Glutenfrei</th>
+ </tr>
+ </thead>
+ <tbody class="align-content-center text-center align-self-center">
+ <?php $__currentLoopData = $allIngredients; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $ingredient): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <tr>
+ <td><?php echo static::e($ingredient['ID']); ?></td>
+ <td>
+ <button type="submit" name="q" class="btn btn-link text-warning" value="<?php echo static::e($ingredient['Name']); ?>"
+ data-toggle="tooltip" data-placement="right" title="Suchen Sie nach <?php echo static::e($ingredient['Name']); ?> im Web">
+ <?php echo static::e($ingredient['Name']); ?>
+
+ </button>
+ </td>
+ <?php if($ingredient['Bio'] == 1 ): ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php else: ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php endif; ?>
+ <?php if($ingredient['Vegetarisch'] == 1 ): ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php else: ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php endif; ?>
+ <?php if($ingredient['Vegan'] == 1 ): ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php else: ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php endif; ?>
+ <?php if($ingredient['Glutenfrei'] == 1 ): ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/check.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php else: ?>
+ <td><img src="../../../img/fontawesome-free-5.11.2-desktop/svgs/solid/times.svg" class="imgIngIcons" alt="Icon"></td>
+ <?php endif; ?>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+ </table>
+ </form>
+ </div>
+ <div class="col-1"></div>
+ </div>
+</main>
