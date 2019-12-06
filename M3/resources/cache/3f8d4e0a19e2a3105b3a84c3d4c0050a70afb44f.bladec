@@ -1,6 +1,6 @@
 <main>
  <?php if($registered == true): ?> {
- <?php if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $remoteConnection)): ?> {
+ <?php if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $remoteConnection)): ?> {
  <p class="text-warning">Sie haben sich erfolgreich registriert. Weiter zur <a href="Start.blade.php">Startseite</a></p>
  <?php else: ?>
  $_POST['registered'] = false;
@@ -46,30 +46,23 @@
  <input type="password" class="form-control" placeholder="Passwort" name="password" value="<?php echo static::e(isset($password) ? $password : ''); ?>" required>
  </label>
  </div>
-
  <div class="form-check">
- <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked>
+ <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked <?php if($role != ""): ?> disabled <?php endif; ?>>
  <label class="form-check-label" for="student">Student</label>
  </div>
  <div class="form-check">
- <input class="form-check-input" type="radio" name="role" id="employee" value="Mitarbeiter">
+ <input class="form-check-input" type="radio" name="role" id="employee" value="Mitarbeiter" <?php if($role != ""): ?> disabled <?php endif; ?>>
  <label class="form-check-label" for="employee">Mitarbeiter</label>
  </div>
- <div class="form-check">
- <input class="form-check-input" type="radio" name="role" id="guest" value="Gaeste">
+ <div class="form-check mb-3">
+ <input class="form-check-input" type="radio" name="role" id="guest" value="Gaeste" <?php if($role != ""): ?> disabled <?php endif; ?>>
  <label class="form-check-label" for="guest">Gast</label>
  </div>
- <?php echo $this->yieldContent('registrationStudents'); ?>
- <?php switch ($role) {
- case ("Studenten"): ?>
- <?php echo $this->yieldContent('registrationStudents'); ?>
- <?php break; ?>
- <?php case ("Mitarbeiter"): ?>
- <?php echo $this->yieldContent('registrationEmployees'); ?>
- <?php break; ?>
- <?php case ("Gaeste"): ?>
- <?php echo $this->yieldContent('registrationGuest'); ?>
- <?php } // end switch ?>
+ <?php if($role != ""): ?>
+ <?php $this->startSection('roleControl'); ?>
+
+ <?php echo $this->yieldSection(); ?>
+ <?php endif; ?>
  <input type="hidden" name="roleSelection" value="true">
  <button class="btn btn-primary mt-3" type="submit" id="btnRegister"> <?php if($role == ''): ?> Registrierung fortsetzen <?php else: ?> Registrieren <?php endif; ?></button>
  </form>

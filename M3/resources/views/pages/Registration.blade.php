@@ -1,6 +1,6 @@
 <main>
     @if($registered == true) {
-        @if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $remoteConnection)) {
+        @if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $remoteConnection)) {
             <p class="text-warning">Sie haben sich erfolgreich registriert. Weiter zur <a href="Start.blade.php">Startseite</a></p>
         @else
             $_POST['registered'] = false;
@@ -46,30 +46,23 @@
                                         <input type="password" class="form-control" placeholder="Passwort" name="password" value="{{$password or ''}}" required>
                                     </label>
                                 </div>
-
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked>
+                                    <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked @if($role != "") disabled @endif>
                                     <label class="form-check-label" for="student">Student</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" id="employee" value="Mitarbeiter">
+                                    <input class="form-check-input" type="radio" name="role" id="employee" value="Mitarbeiter" @if($role != "") disabled @endif>
                                     <label class="form-check-label" for="employee">Mitarbeiter</label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" id="guest" value="Gaeste">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="role" id="guest" value="Gaeste" @if($role != "") disabled @endif>
                                     <label class="form-check-label" for="guest">Gast</label>
                                 </div>
-                                @yield('registrationStudents')
-                                @switch($role)
-                                    @case("Studenten")
-                                        @yield('registrationStudents')
-                                    @break
-                                    @case("Mitarbeiter")
-                                        @yield('registrationEmployees')
-                                    @break
-                                    @case("Gaeste")
-                                        @yield('registrationGuest')
-                                @endswitch
+                                @if($role != "")
+                                    @section('roleControl')
+
+                                    @show
+                                @endif
                                 <input type="hidden" name="roleSelection" value="true">
                                 <button class="btn btn-primary mt-3" type="submit" id="btnRegister"> @if($role == '') Registrierung fortsetzen @else Registrieren @endif</button>
                             </form>
