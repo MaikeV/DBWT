@@ -1,10 +1,12 @@
 <main>
-    @if($registered == true) {
-        @if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $remoteConnection)) {
-            <p class="text-warning">Sie haben sich erfolgreich registriert. Weiter zur <a href="Start.blade.php">Startseite</a></p>
+    @if($registered == true)
+        @if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, $message, $fieldNum, $remoteConnection)) {
+            <p class="text-warning">{{ $message }}. Weiter zur <a href="Start.blade.php">Startseite</a></p>
         @else
-            $_POST['registered'] = false;
-            <p class="text-warning">Registrierung Fehlgeschlagen. <a href="Registration.php">Versuchen Sie es erneut</a></p>
+            <p class="text-danger">{{ $message }} Versuchen Sie es erneut</p>
+            @foreach($errors as $error)
+                <ul>{{ $error }}</ul>
+            @endforeach
         @endif
     @else
         <div class="row">

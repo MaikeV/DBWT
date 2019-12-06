@@ -16,23 +16,16 @@
         $role = "";
     }
 
-    $studies = "";
-    $phone = "";
-    $room = "";
-    $reason = "";
-    $endDate = "";
-    $matrikel = "";
-    $registered = "";
-    $firstName = "";
-    $lastName = "";
-    $birthday = "";
-    $password = "";
-    $email = "";
-    $role = "";
-    $username = "";
-    $option1 = "";
-    $option2 = "";
-    $message = "";
+    $errors = array();
+
+    $fields = array();
+    $queryFields = "SELECT ID, Name FROM Fachbereiche";
+
+    if ($resultFields = mysqli_query($remoteConnection, $queryFields)) {
+        while($rowFields = mysqli_fetch_assoc($resultFields)) {
+            array_push($fields, $rowFields);
+        }
+    }
 
     if (isset($_POST['registered']) || isset($_POST['roleSelection'])) {
         if (isset($_POST['registered'])) {
@@ -41,13 +34,25 @@
             if ($role == "Studenten") {
                 $option1 = $_POST['studies'];
                 $option2 = $_POST['matrikel'];
+                $fieldNum = $_POST['field'];
             } else if($role == "Mitarbeiter") {
                 $option1 = $_POST['phone'];
                 $option2 = $_POST['room'];
-            } else {
+                $fieldNum = $_POST['field'];
+            } else if($role == "Gaeste"){
                 $option1 = $_POST['reason'];
                 $option2 = $_POST['endDate'];
+                $fieldNum = "";
+            } else {
+                $option1 = "";
+                $option2 = "";
+                $fieldNum = "";
             }
+        } else {
+            $registered = false;
+            $option1 = "";
+            $option2 = "";
+            $fieldNum = "";
         }
 
         if(isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['birthday']) && isset($_POST['password']) && isset($_POST['email']) && isset($_POST['username'])) {
@@ -56,11 +61,46 @@
             $birthday = $_POST['birthday'];
             $password = $_POST['password'];
             $email = $_POST['email'];
-            $role = $_POST['role'];
             $username = $_POST['username'];
+            $studies = "";
+            $phone = "";
+            $room = "";
+            $reason = "";
+            $endDate = "";
+            $matrikel = "";
+            $message = "";
+        } else {
+            $studies = "";
+            $phone = "";
+            $room = "";
+            $reason = "";
+            $endDate = "";
+            $matrikel = "";
+            $fieldNum = "";
+            $option1 = "";
+            $option2 = "";
+            $message = "";
         }
     } else {
         $registered = false;
+
+        $studies = "";
+        $phone = "";
+        $room = "";
+        $reason = "";
+        $endDate = "";
+        $matrikel = "";
+        $registered = "";
+        $firstName = "";
+        $lastName = "";
+        $birthday = "";
+        $password = "";
+        $email = "";
+        $role = "";
+        $username = "";
+        $option1 = "";
+        $option2 = "";
+        $message = "";
     }
 
     echo $blade->run("layouts.head");
@@ -71,12 +111,12 @@
     echo $blade->run("RegistrationChild", array("registered" => $registered, "firstName" => $firstName, "lastName" => $lastName,
         "birthday" => $birthday, "email" => $email, "password" => $password, "role" => $role, "username" => $username,
         "option1" => $option1, "option2" => $option2, "studies" => $studies, "phone" => $phone, "matrikel" => $matrikel, "room" => $room,
-        "reason" => $reason, "endDate" => $endDate, "message" => $message));
+        "reason" => $reason, "endDate" => $endDate, "fields" => $fields, "fieldNum" => $fieldNum, "message" => $message, "errors" => $errors, "remoteConnection" => $remoteConnection));
     echo $blade->run("layouts.footer", array("year" => $year));
 
-    function register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $remoteConnection) {
-        if (checkUserExists($username, $email, $remoteConnection)) {
-            echo "User already exists";
+    function register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, &$message, $fieldNum, $remoteConnection) {
+        if (checkUserExists($username, $errors, $remoteConnection) || checkEmailExists($email, $errors, $remoteConnection)) {
+            $message = "Die Registrierung konnte nicht abgeschlossen werden. Bitte Ueberpruefen Sie Ihre Eingaben";
             return false;
         }
 
@@ -85,16 +125,17 @@
         $queryUser = "INSERT INTO Benutzer(`E-Mail`, Nutzername, Aktiv, Vorname, Nachname, Geburtsdatum, Hash) VALUES (".$email.", ".$username.", 1, ".$firstName.", ".$lastName.", ".$birthday.", ".$password.")";
         $usernum = getUserNum($username, $remoteConnection);
 
-        //fh ange
         if($result = mysqli_query($remoteConnection, $queryUser) && $usernum != "") {
             if($role == "Studenten") {
                 $params = "Matrikelnummer, Studiengang";
 
                 addToFH($usernum, $remoteConnection);
+                addToField($fieldNum, $usernum, $remoteConnection);
             } else if($role == "Mitarbeiter") {
                 $params = "Buero, Telefon";
 
                 addToFH($usernum, $remoteConnection);
+                addToField($fieldNum, $usernum, $remoteConnection);
             } else if($role == "Gaeste") {
                 $params = "Ablaufdatum, Grund";
             } else {
@@ -105,6 +146,10 @@
 
             echo $queryRole;
 
+            if (!mysqli_query($remoteConnection, $queryRole)) {
+                echo "Error: " . $queryRole . "<br>" . mysqli_error($remoteConnection);
+            }
+
             $message = "Sie haben sich erfolgreich registriert.";
 
             session_start();
@@ -113,6 +158,9 @@
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['firstName'] = $firstName;
             $_SESSION['role'] = $role;
+
+            $queryUpdateLogin = "UPDATE Benutzer SET LetzterLogin = NOW() WHERE Nutzername = '".$_POST['username']."'";
+            mysqli_query($remoteConnection, $queryUpdateLogin);
 
             return true;
         }
@@ -129,6 +177,14 @@
         }
     }
 
+    function addToField($fieldNum, $usernum, $remoteConnection) {
+        $queryInsertField = "INSERT INTO gehoertZu(IDFachbereich, NummerBenutzer) VALUES (".$fieldNum.", ".$usernum.")";
+
+        if(!mysqli_query($remoteConnection, $queryInsertField)){
+            echo "Error: " . $queryInsertField . "<br>" . mysqli_error($remoteConnection);
+        }
+    }
+
     function getUserNum($username, $remoteConnection) {
         $queryGetNum = "SELECT Nummer FROM Benutzer WHERE Nutzername = ".$username;
 
@@ -137,15 +193,26 @@
         } else return "";
     }
 
-    function checkUserExists($username, $email, $remoteConnection) {
-        $query = "SELECT * FROM Benutzer WHERE Nutzername = ".$username." OR `E-Mail` = ".$email;
+    function checkUserExists($username, $errors, $remoteConnection) {
+        $query = "SELECT * FROM Benutzer WHERE Nutzername = ".$username;
 
         if($result = mysqli_query($remoteConnection, $query)) {
             while($row = mysqli_fetch_assoc($result)) {
+                array_push($errors, "Nutzername schon vergeben");
                 return true;
             }
         }
         return false;
     }
 
+    function checkEmailExists($email, $errors, $remoteConnection) {
+        $query = "SELECT * FROM Benutzer WHERE `E-Mail` = ".$email;
 
+        if($result = mysqli_query($remoteConnection, $query)) {
+            while($row = mysqli_fetch_assoc($result)) {
+                array_push($errors, "Es existiert bereits ein Benutzer mit der angegebenen Mail-Adresse");
+                return true;
+            }
+        }
+        return false;
+    }

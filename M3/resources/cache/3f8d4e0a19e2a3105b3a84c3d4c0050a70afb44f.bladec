@@ -1,10 +1,12 @@
 <main>
- <?php if($registered == true): ?> {
- <?php if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $remoteConnection)): ?> {
- <p class="text-warning">Sie haben sich erfolgreich registriert. Weiter zur <a href="Start.blade.php">Startseite</a></p>
+ <?php if($registered == true): ?>
+ <?php if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, $message, $fieldNum, $remoteConnection)): ?> {
+ <p class="text-warning"><?php echo static::e($message); ?>. Weiter zur <a href="Start.blade.php">Startseite</a></p>
  <?php else: ?>
- $_POST['registered'] = false;
- <p class="text-warning">Registrierung Fehlgeschlagen. <a href="Registration.php">Versuchen Sie es erneut</a></p>
+ <p class="text-danger"><?php echo static::e($message); ?> Versuchen Sie es erneut</p>
+ <?php $__currentLoopData = $errors; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <ul><?php echo static::e($error); ?></ul>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  <?php endif; ?>
  <?php else: ?>
  <div class="row">

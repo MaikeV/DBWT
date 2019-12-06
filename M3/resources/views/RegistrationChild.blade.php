@@ -4,22 +4,33 @@
     @parent
     @switch($role)
         @case("Studenten")
-            <div class="form-group">
-                <label> Matrikelnummer:
-                    <input class="form-control" type="number" min="10000000" max="999999999" placeholder="Matrikelnummer" name="matrikel" value="{{$matrikel or ''}}" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label> Studiengang:
-                    <select name="studies" class="form-control" required>
-                        <option value="INF" @if($studies == "INF") selected @endif>Informatik</option>
-                        <option value="ET" @if($studies == "ET") selected @endif>Elektrotechnik</option>
-                        <option value="WI" @if($studies == "WI") selected @endif>Wirtschaftsinformatik</option>
-                        <option value="MCD" @if($studies == "MCD") selected @endif>MCD</option>
-                        <option value="ISE" @if($studies == "ISE") selected @endif>Information System Engineer</option>
+            <fieldset>
+                <h4>Ihr Fachbereich:</h4>
+                <label> Welchem Fachbereich gehoeren Sie an?
+                    <select name="field" class="form-control" required>
+                        @foreach($fields as $field)
+                            <option value="{{ $field['ID'] }}">{{ $field['Name'] }}</option>
+                        @endforeach
                     </select>
                 </label>
-            </div>
+                <h4 class="mt-3">Ihre Studentendaten: </h4>
+                <div class="form-group">
+                    <label> Matrikelnummer:
+                        <input class="form-control" type="number" min="10000000" max="999999999" placeholder="Matrikelnummer" name="matrikel" value="{{$matrikel or ''}}" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label> Studiengang:
+                        <select name="studies" class="form-control" required>
+                            <option value="INF" @if($studies == "INF") selected @endif>Informatik</option>
+                            <option value="ET" @if($studies == "ET") selected @endif>Elektrotechnik</option>
+                            <option value="WI" @if($studies == "WI") selected @endif>Wirtschaftsinformatik</option>
+                            <option value="MCD" @if($studies == "MCD") selected @endif>MCD</option>
+                            <option value="ISE" @if($studies == "ISE") selected @endif>Information System Engineer</option>
+                        </select>
+                    </label>
+                </div>
+            </fieldset>
             <input type="hidden" name="registered" value="true">
         @break
         @case("Mitarbeiter")

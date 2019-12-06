@@ -4,6 +4,16 @@
  @parentXYZABC
  <?php switch ($role) {
  case ("Studenten"): ?>
+ <fieldset>
+ <h4>Ihr Fachbereich:</h4>
+ <label> Welchem Fachbereich gehoeren Sie an?
+ <select name="field" class="form-control" required>
+ <?php $__currentLoopData = $fields; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $field): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <option value="<?php echo static::e($field['ID']); ?>"><?php echo static::e($field['Name']); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </label>
+ <h4 class="mt-3">Ihre Studentendaten: </h4>
  <div class="form-group">
  <label> Matrikelnummer:
  <input class="form-control" type="number" min="10000000" max="999999999" placeholder="Matrikelnummer" name="matrikel" value="<?php echo static::e(isset($matrikel) ? $matrikel : ''); ?>" required>
@@ -20,6 +30,7 @@
  </select>
  </label>
  </div>
+ </fieldset>
  <input type="hidden" name="registered" value="true">
  <?php break; ?>
  <?php case ("Mitarbeiter"): ?>
