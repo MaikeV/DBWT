@@ -10,13 +10,13 @@
  <fieldset class="border border-primary p-5">
  <legend class="text-warning text-center w-auto"> Login </legend>
  <form target="_self" method="post">
- <?php if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true && isset($_SESSION['visited']) && $_SESSION['visited'] == true): ?>
- <p class="text-warning">Hallo '.$_SESSION['username'].' Sie sind angemeldet als '.$_SESSION['role'].'</p>
+ <?php if($loggedIn == "true" && $visited == "true"): ?>
+ <p class="text-warning">Hallo <?php echo static::e($username); ?> Sie sind angemeldet als <?php echo static::e($role); ?> </p>
  <div class="form-group mt-3">
  <input type="hidden" class="form-control" name="function" value="logout">
  </div>
- <button class="btn btn-primary" type="submit" name="logout" value="true">Logout</button>
- <?php elseif(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == false && isset($_SESSION['visited']) && $_SESSION['visited'] == true): ?>
+ <button class="btn btn-primary" type="submit">Logout</button>
+ <?php elseif($loggedIn == "false" && $visited == "true"): ?>
  <p class="text-danger">Das hat leider nicht geklappt, bitte versuchen Sie es nochmal.</p>
  <div class="form-group">
  <input type="text" class="form-control border border-danger" placeholder="Benutzer" name="username" required>

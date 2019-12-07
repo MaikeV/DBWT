@@ -1,17 +1,20 @@
 <main>
-    @if($registered == true)
-        @if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, $message, $fieldNum, $remoteConnection)) {
-            <p class="text-warning">{{ $message }}. Weiter zur <a href="Start.blade.php">Startseite</a></p>
-        @else
-            <p class="text-danger">{{ $message }} Versuchen Sie es erneut</p>
-            @foreach($errors as $error)
-                <ul>{{ $error }}</ul>
-            @endforeach
-        @endif
-    @else
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="col-4">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            @if($registered == true)
+                @if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, $message, $fieldNum, $remoteConnection))
+                    <p class="text-warning">{{ $message }}. Weiter zur <a href="Start.php">Startseite</a></p>
+                @else
+                    <p class="text-danger">{{ $message }} Versuchen Sie es erneut</p>
+                    @foreach($errors as $error)
+                        <ul class="text-danger">
+                            <li>{{ $error }}</li>
+                        </ul>
+                    @endforeach
+                @endif
+            @endif
+            @if($loggedIn == false)
                 <fieldset class="border border-primary p-5 w-100">
                     <legend class="text-warning text-center w-auto"> Registrieren </legend>
                     <div class="row">
@@ -49,7 +52,7 @@
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked @if($role != "") disabled @endif>
+                                    <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked>
                                     <label class="form-check-label" for="student">Student</label>
                                 </div>
                                 <div class="form-check">
@@ -72,8 +75,8 @@
                         <div class="col-3"></div>
                     </div>
                 </fieldset>
-            </div>
-            <div class="col-4"></div>
+            @endif
         </div>
-    @endif
+        <div class="col-4"></div>
+    </div>
 </main>

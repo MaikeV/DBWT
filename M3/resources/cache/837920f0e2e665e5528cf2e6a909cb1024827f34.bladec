@@ -9,26 +9,24 @@
  <div class="row">
  <div class="col-3">
  <?php $this->startSection('login'); ?>
+
+ <?php echo $this->yieldSection(); ?>
  </div>
  <div class="col-6">
- <?php
- echo '<img src="data:image/jpeg;base64,'.$row['Binaerdaten'].'" class="img rounded" alt="'.$row['Alt-Text'].'">';
- ?>
+ <img src="data:image/jpeg;base64, <?php echo static::e($meal['Binaerdaten']); ?>" class="img rounded" alt="<?php echo static::e($meal['Alt-Text']); ?>">
  </div>
  <div class="col-3 p-5">
  <div class="row">
  <div class="col-12 text-center text-warning">
- <p><strong><?php if (isset($_SESSION['role'])) { echo $_SESSION['role']; } else { echo "Gast"; }?></strong>-Preis</p>
+ <p><strong><?php if($role != ""): ?> <?php echo static::e($role); ?> <?php else: ?> Gast <?php endif; ?></strong>-Preis</p>
  <h4>
- <?php
- if (isset($_SESSION['role']) && $_SESSION['role'] == 'Student') {
- echo round($row['Studentpreis'], 2).' EUR';
- } else if(isset($_SESSION['role']) && $_SESSION['role'] == 'Mitarbeiter') {
- echo round($row['MA-Preis'], 2).' EUR';
- } else {
- echo round($row['Gastpreis'], 2).' EUR';
- }
- ?>
+ <?php if($role == 'Student'): ?>
+ <?php echo static::e($meal['Studentpreis']); ?> EUR
+ <?php elseif($role == 'Mitarbeiter'): ?>
+ <?php echo static::e($meal['MA-Preis']); ?> EUR
+ <?php else: ?>
+ <?php echo static::e($meal['Gastpreis']); ?> EUR
+ <?php endif; ?>
  </h4>
  </div>
  </div>
@@ -57,28 +55,13 @@
  </ul>
  <div class="tab-content border border-primary p-3">
  <div class="tab-pane active" id="desc" role="tabpanel" aria-labelledby="desc-tab">
- <?php
- echo '<p>'.$row['Beschreibung'].'</p>';
- ?>
+ <p><?php echo static::e($meal['Beschreibung']); ?></p>
  </div>
  <div class="tab-pane" id="ing" role="tabpanel" aria-labelledby="ing-tab">
  <ul class="text-warning">
- <?php
- $ingredientsIDQuery = 'SELECT IDZutaten FROM enthaeltMZ CROSS JOIN Mahlzeiten ON enthaeltMZ.IDMahlzeiten = Mahlzeiten.ID WHERE IDMahlzeiten LIKE '.$_GET['id'];
-
- if($ingredientsIDResult = mysqli_query($remoteConnection, $ingredientsIDQuery)) {
- while ($ingredientsIDRow = mysqli_fetch_assoc($ingredientsIDResult)) {
- foreach($ingredientsIDRow as $ingRow) {
- $ingredientsNameQuery = "SELECT Name FROM Zutaten WHERE ID = ".$ingRow;
-
- if ($ingredientsNameResult = mysqli_query($remoteConnection, $ingredientsNameQuery)) {
- $ingredientsNameRow = mysqli_fetch_assoc($ingredientsNameResult);
- echo '<li><p>'.$ingredientsNameRow['Name'].'</p></li>';
- }
- }
- }
- }
- ?>
+ <?php $__currentLoopData = $ingredients; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $ingredient): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <li><p> <?php echo static::e($ingredient['Name']); ?></p></li>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </ul>
  </div>
  <div class="tab-pane" id="rec" role="tabpanel" aria-labelledby="rec-tab">
@@ -92,11 +75,9 @@
  <div class="col-9">
  <select class="form-control w-50" id="dishInput" name="mahlzeit" required>
  <option value="">---</option>
- <?php
- while($row = mysqli_fetch_assoc($result)) {
- echo '<option>'.$row['Name'].'</option>';
- }
- ?>
+ <?php $__currentLoopData = $allMeals; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $mealSel): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <option><?php echo static::e($mealSel['Name']); ?></option>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </select>
  </div>
  </div>
@@ -150,9 +131,6 @@
  </div>
  <br>
 </main>
-<?php include '../layouts/footer.blade.php' ?>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>

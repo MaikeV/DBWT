@@ -1,10 +1,8 @@
 <?php
-
     require '../../../vendor/autoload.php';
     Use eftec\bladeone\BladeOne;
 
     include '../includes/connection.php';
-    include '../includes/auth.php';
 
     $views = __DIR__ . '/../../views';
     $cache = __DIR__ . '/../../cache';
@@ -12,14 +10,22 @@
 
     session_start();
 
+    include '../includes/auth.php';
+
     $year = date("Y");
 
-    if (isset($_SESSION['role']) && isset($_SESSION['loggedIn'])) {
+    if (isset($_SESSION['role']) && isset($_SESSION['loggedIn']) && isset($_SESSION['visited']) && isset($_SESSION['username'])) {
+        echo "Bla";
         $loggedIn = $_SESSION['loggedIn'];
         $role = $_SESSION['role'];
+        $visited = $_SESSION['visited'];
+        $username = $_SESSION['username'];
     } else {
+        echo "Blub";
         $loggedIn = "";
         $role = "";
+        $visited = "";
+        $username = "";
     }
 
     if (isset($_GET['id'])) {
@@ -48,14 +54,6 @@
     if($ingredientsIDResult = mysqli_query($remoteConnection, $ingredientsIDQuery)) {
         while ($ingredientsIDRow = mysqli_fetch_assoc($ingredientsIDResult)) {
             array_push($ingredients, $ingredientsIDRow);
-//            foreach($ingredientsIDRow as $ingRow) {
-//                $ingredientsNameQuery = "SELECT Name FROM Zutaten WHERE ID = ".$ingRow;
-//
-//                if ($ingredientsNameResult = mysqli_query($remoteConnection, $ingredientsNameQuery)) {
-//                    $ingredientsNameRow = mysqli_fetch_assoc($ingredientsNameResult);
-//                    echo '<li><p>'.$ingredientsNameRow['Name'].'</p></li>';
-//                }
-//            }
         }
     }
 
@@ -75,6 +73,6 @@
 
     echo $blade->run('layouts.head');
     echo $blade->run('layouts.header');
-    echo $blade->run('loginChild', array("meal" => $meal, "ingredients" => $ingredients, "allMeals" => $allMeals, "loggedIn" => $loggedIn, "role" => $role));
+    echo $blade->run('loginChild', array("meal" => $meal, "ingredients" => $ingredients, "allMeals" => $allMeals, "loggedIn" => $loggedIn, "role" => $role, "visited" => $visited, "username" => $username));
     echo $blade->run('layouts.footer', array("year" => $year));
 

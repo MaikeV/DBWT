@@ -13,19 +13,19 @@
                 @show
             </div>
             <div class="col-6">
-                <img src="data:image/jpeg;base64, {{  $meal['Binaerdaten'] }}" class="img rounded" alt="{{ $meal['Alt-Text'] }}">
+                <img src="data:image/jpeg;base64, {{ $meal['Binaerdaten'] }}" class="img rounded" alt="{{ $meal['Alt-Text'] }}">
             </div>
             <div class="col-3 p-5">
                 <div class="row">
                     <div class="col-12 text-center text-warning">
-                        <p><strong>@if ($role != "") {{ $role  }} @else Gast @endif</strong>-Preis</p>
+                        <p><strong>@if ($role != "") {{ $role }} @else Gast @endif</strong>-Preis</p>
                         <h4>
                             @if ($role == 'Student')
-                                round($row['Studentpreis'], 2).' EUR'
-                            @elseif($role == 'Mitarbeiter') {
-                                round($row['MA-Preis'], 2).' EUR'
-                            @else {
-                                round($row['Gastpreis'], 2).' EUR'
+                                {{ $meal['Studentpreis'] }} EUR
+                            @elseif($role == 'Mitarbeiter')
+                                {{ $meal['MA-Preis'] }} EUR
+                            @else
+                                {{ $meal['Gastpreis'] }} EUR
                             @endif
                         </h4>
                     </div>

@@ -6,16 +6,16 @@
                         <p>(c) DBWT {{ $year }}</p>
                     </div>
                     <div class="col-2 text-center border-right border-white">
-                        <a href="../pages/Login.php" class="text-white">Login</a>
+                        <a href="views/pages/Login.php" class="text-white">Login</a>
                     </div>
                     <div class="col-2 text-center border-right border-white">
-                        <a href="../pages/Registration.php" class="text-white">Registrieren</a>
+                        <a href="views/pages/Registration.php" class="text-white">Registrieren</a>
                     </div>
                     <div class="col-2 text-center border-right border-white">
-                        <a href="../../Zutatenliste.php" class="text-white">Zutatenliste</a>
+                        <a href="Zutatenliste.php" class="text-white">Zutatenliste</a>
                     </div>
                     <div class="col-2 text-center text-justify">
-                        <a href="../pages/Impressum.html" class="text-white">Impressum</a>
+                        <a href="views/pages/Impressum.html" class="text-white">Impressum</a>
                     </div>
                 </div>
             </div>

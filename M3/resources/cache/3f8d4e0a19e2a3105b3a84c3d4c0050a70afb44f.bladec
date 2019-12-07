@@ -1,17 +1,20 @@
 <main>
- <?php if($registered == true): ?>
- <?php if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, $message, $fieldNum, $remoteConnection)): ?> {
- <p class="text-warning"><?php echo static::e($message); ?>. Weiter zur <a href="Start.blade.php">Startseite</a></p>
- <?php else: ?>
- <p class="text-danger"><?php echo static::e($message); ?> Versuchen Sie es erneut</p>
- <?php $__currentLoopData = $errors; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
- <ul><?php echo static::e($error); ?></ul>
- <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
- <?php endif; ?>
- <?php else: ?>
  <div class="row">
  <div class="col-4"></div>
  <div class="col-4">
+ <?php if($registered == true): ?>
+ <?php if(register($username, $email, $password, $firstName, $lastName, $birthday, $role, $option1, $option2, $errors, $message, $fieldNum, $remoteConnection)): ?>
+ <p class="text-warning"><?php echo static::e($message); ?>. Weiter zur <a href="Start.php">Startseite</a></p>
+ <?php else: ?>
+ <p class="text-danger"><?php echo static::e($message); ?> Versuchen Sie es erneut</p>
+ <?php $__currentLoopData = $errors; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <ul class="text-danger">
+ <li><?php echo static::e($error); ?></li>
+ </ul>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php endif; ?>
+ <?php endif; ?>
+ <?php if($loggedIn == false): ?>
  <fieldset class="border border-primary p-5 w-100">
  <legend class="text-warning text-center w-auto"> Registrieren </legend>
  <div class="row">
@@ -49,7 +52,7 @@
  </label>
  </div>
  <div class="form-check">
- <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked <?php if($role != ""): ?> disabled <?php endif; ?>>
+ <input class="form-check-input" type="radio" name="role" id="student" value="Studenten" checked>
  <label class="form-check-label" for="student">Student</label>
  </div>
  <div class="form-check">
@@ -72,8 +75,8 @@
  <div class="col-3"></div>
  </div>
  </fieldset>
+ <?php endif; ?>
  </div>
  <div class="col-4"></div>
  </div>
- <?php endif; ?>
 </main>
