@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="form-group w-100">
                                     <label> Geburtstag:
-                                        <input class="form-control" type="date" placeholder="Nachname" name="birthday" value="{{$birthday or ''}}" required>
+                                        <input class="form-control" type="date" name="birthday" value="{{$birthday or ''}}" required>
                                     </label>
                                 </div>
                                 <div class="form-group w-100">

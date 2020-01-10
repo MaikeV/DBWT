@@ -15,13 +15,11 @@
     $year = date("Y");
 
     if (isset($_SESSION['role']) && isset($_SESSION['loggedIn']) && isset($_SESSION['visited']) && isset($_SESSION['username'])) {
-        echo "Bla";
         $loggedIn = $_SESSION['loggedIn'];
         $role = $_SESSION['role'];
         $visited = $_SESSION['visited'];
         $username = $_SESSION['username'];
     } else {
-        echo "Blub";
         $loggedIn = "";
         $role = "";
         $visited = "";

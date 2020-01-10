@@ -169,12 +169,14 @@
 
             session_start();
             $_SESSION['loggedIn'] = true;
+            $loggedIn = true;
             $_SESSION['visited'] = true;
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['firstName'] = $firstName;
             $_SESSION['role'] = $role;
 
-            $message = "Sie haben sich erfolgreich registriert. Ihre Benutzernummer lautet ".getUsernum($remoteConnection);
+            $userNum = getUsernum($username, $remoteConnection);
+            $message = "Sie haben sich erfolgreich registriert. Ihre Benutzernummer lautet ".$userNum['Nummer'];
             $queryUpdateLogin = "UPDATE Benutzer SET LetzterLogin = NOW() WHERE Nutzername = '".$_POST['username']."'";
             mysqli_query($remoteConnection, $queryUpdateLogin);
 
@@ -185,8 +187,8 @@
         return false;
     }
 
-    function getUserNum($remoteConnection) {
-        $queryUserNum = "SELECT Nummer FROM Benutzer WHERE Nutzername = ".$_SESSION['username'];
+    function getUserNum($username, $remoteConnection) {
+        $queryUserNum = "SELECT Nummer FROM Benutzer WHERE Nutzername = '". $username."'";
 
         if ($resultUserNum = mysqli_query($remoteConnection, $queryUserNum)) {
             if($row = mysqli_fetch_assoc($resultUserNum)) {
@@ -215,7 +217,7 @@
         }
     }
 
-    function checkUserExists($username, $errors, $remoteConnection) {
+    function checkUserExists($username, &$errors, $remoteConnection) {
         $query = "SELECT * FROM Benutzer WHERE Nutzername = ".$username;
 
         if($result = mysqli_query($remoteConnection, $query)) {
@@ -227,7 +229,7 @@
         return false;
     }
 
-    function checkEmailExists($email, $errors, $remoteConnection) {
+    function checkEmailExists($email, &$errors, $remoteConnection) {
         $query = "SELECT * FROM Benutzer WHERE `E-Mail` = ".$email;
 
         if($result = mysqli_query($remoteConnection, $query)) {

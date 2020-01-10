@@ -13,7 +13,7 @@
                 @show
             </div>
             <div class="col-6">
-                <img src="data:image/jpeg;base64, {{ $meal['Binaerdaten'] }}" class="img rounded" alt="{{ $meal['Alt-Text'] }}">
+                <img src="data:image/jpeg;base64,{{ $meal['Binaerdaten'] }}" class="img rounded" alt="{{ $meal['Alt-Text'] }}">
             </div>
             <div class="col-3 p-5">
                 <div class="row">

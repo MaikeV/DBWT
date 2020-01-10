@@ -1,0 +1,10 @@
+<div class="row">
+ <div class="col-4"></div>
+ <div class="col-4">
+ <?php $this->startSection('login'); ?>
+
+ <?php echo $this->yieldSection(); ?>
+ </div>
+ <div class="col-4"></div>
+</div>
+
